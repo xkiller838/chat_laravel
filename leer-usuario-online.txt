@@ -1,0 +1,52 @@
+// First of all you need to create a Middleware
+    php artisan make:middleware LastUserActivity
+    
+ // Add this Middleware in Kernel
+    protected $middlewareGroups = [
+        'web' => [
+            \App\Http\Middleware\EncryptCookies::class,
+            \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+            \Illuminate\Session\Middleware\StartSession::class,
+            // \Illuminate\Session\Middleware\AuthenticateSession::class,
+            \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+            \App\Http\Middleware\VerifyCsrfToken::class,
+            \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \App\Http\Middleware\LastUserActivity::class,
+        ],
+        
+ // Open LastUserActivity.php form middleware
+      use Carbon\Carbon;
+      use Closure;
+      use Cache;
+      use Illuminate\Support\Facades\Auth;
+
+
+      public function handle($request, Closure $next)
+        {
+            if (Auth::check()){
+                $expireAt = Carbon::now()->addMinute(1);
+                Cache::put('user-is-online-' . Auth::user()->id, true, $expireAt);
+            }
+            return $next($request);
+        }
+        
+ // create a function isOnline() on User Model file 
+    use Cache;
+    
+    public function isOnline(){
+        return Cache::has('user-is-online-'. $this->id);
+    }
+        
+ // after that call it to blade 
+    
+            @foreach($users as $user)
+                @if($user->isOnline())
+
+                    <tr role="row" class="odd">
+                        <td class="sorting_1">{{ $user->name }}</td>
+                    </tr>
+                @endif
+
+            @endforeach
+@xkiller838
+ 

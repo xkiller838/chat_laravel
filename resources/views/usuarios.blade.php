@@ -19,7 +19,10 @@
                                       Email
                                 </th>
                                 <th scope="col">
-                                    <h5>Accion</h5>
+                                      Accion
+                                </th>
+                                <th scope="col">
+                                      Status
                                 </th>
                             </tr>
                         </thead>
@@ -43,6 +46,18 @@
                                     <a href="{{ route('chat.with', $usuario->id ) }}" target="_blank">
                                         <button type="button" class="btn btn-info btn-sm"><i class="fas fa-comment-alt"></i>&nbsp;Chat</button>
                                     </a>
+                                </td>
+
+                                <td  data-label="Online">
+                                         @if ($usuario->isOnline())
+                                             <li class="text-success">
+                                                 Online
+                                             </li>
+                                         @else
+                                             <li class="text-muted">
+                                                Offline
+                                            </li>
+                                         @endif
                                 </td>
                             </tr>
                             @endforeach
