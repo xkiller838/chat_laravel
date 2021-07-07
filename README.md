@@ -29,6 +29,10 @@ https://beyondco.de/docs/laravel-websockets/getting-started/introduction
 4) almacenamiento del dialogo en base de datos
 5) mostrando fecha y hora de cada mensaje
 
+## leer
+
+para agregar la funcion de status online de la tabla lista de usuarios leer el archivo leer-usuario-online.txt donde explico como implementarlo
+
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
