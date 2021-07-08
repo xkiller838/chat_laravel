@@ -30,7 +30,9 @@ Route::get('auth/user', function() {
  
 });
 
-Route::get('chat/{chat}/get_users', 'ChatController@get_users')->name('chat.get_users');
+Route::group(['middleware' => 'online' ], function() {
+
+	Route::get('chat/{chat}/get_users', 'ChatController@get_users')->name('chat.get_users');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -44,3 +46,7 @@ Route::get('/chat/{chat}/get_messages/', 'ChatController@get_messages')->name('c
 
 
 Route::get('/usuarios', 'UserController@index')->name('usuarios');
+
+});
+
+
